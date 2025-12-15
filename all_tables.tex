@@ -1,0 +1,275 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage[margin=1in]{geometry}
+\usepackage{makecell}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\usepackage{array}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\begin{document}
+
+%=====================================================
+% Section 1: Full sample (1994Q1–2013Q4)
+%=====================================================
+\section{Full Sample}
+
+\subsection{No Additional Filter}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Table VIII -- Full Sample, No Additional Filter}
+  \label{tab:t8_full_none}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_full_none.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_full_none.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+
+\subsection{Growth Filter + Winsorization}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Table VIII -- Full Sample, Growth Filter + Winsorization}
+  \label{tab:t8_full_both}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_full_both.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_full_both.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+
+%=====================================================
+% Section 2: Pre-2008 sample (through 2007Q4)
+%=====================================================
+\section{Different Specifications}
+\begin{table}[htbp]
+  \centering
+  \caption{Robustness of Balance Sheet Responses to Fed Funds Shocks Across Samples}
+  \label{tab:t8_robustness_composite}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_robustness_composite.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_robustness_composite.tex}
+
+      \vspace{0.75em}
+      \begin{tablenotes}
+        \footnotesize
+        \item \emph{Notes:} Each row corresponds to a different sample restriction: full sample, pre-2008 cutoff, top 25\% and top 10\% of banks by average assets. Entries report the coefficient on $\Delta FF_t \times$ Bank HHI with clustered standard errors in parentheses. All specifications use the ``both'' filter (winsorization and exclusion of high-asset-growth banks) and the baseline fixed effects: bank, quarter, and bank $\times$ post-2008 fixed effects.
+      \end{tablenotes}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+
+\subsection{Pre-2008 Sample (Through 2007Q4)}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Table VIII -- Pre-2008 Sample, Growth Filter + Winsorization}
+  \label{tab:t8_pre2008_both}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_pre2008_both.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_pre2008_both.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+
+%=====================================================
+% Section 3: Top 25% by Average Assets
+%=====================================================
+\subsection{Top 25\% of Banks by Average Assets}
+\begin{table}[htbp]
+  \centering
+  \caption{Table VIII -- Top 25\% Sample, Growth Filter + Winsorization}
+  \label{tab:t8_top25_both}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_top25_both.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_top25_both.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+
+%=====================================================
+% Section 4: Top 10% by Average Assets
+%=====================================================
+\subsection{Top 10\% of Banks by Average Assets}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Table VIII -- Top 10\% Sample, Growth Filter + Winsorization}
+  \label{tab:t8_top10_both}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_top10_both.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_top10_both.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+
+\clearpage
+
+
+% ==== FULL SAMPLE: Composite across filters ====
+\section{Effect of Different Filters on Different Samples}
+\subsection{Full Sample}
+\begin{table}[htbp]
+  \centering
+  \caption{Balance Sheet Responses to Fed Funds Shocks -- Full Sample, Composite Across Filters}
+  \label{tab:t8_full_composite}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_full_composite.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_full_composite.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+% ==== PRE-2008 SAMPLE: Composite across filters ====
+\subsection{Pre-2008 Sample}
+\begin{table}[htbp]
+  \centering
+  \caption{Balance Sheet Responses to Fed Funds Shocks -- Pre-2008 Sample (through 2007Q4), Composite Across Filters}
+  \label{tab:t8_pre2008_composite}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_pre2008_composite.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_pre2008_composite.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+% ==== TOP 25% BY AVERAGE ASSETS: Composite across filters ====
+\subsection{Top 25\% of Banks by Average Assets}
+\begin{table}[htbp]
+  \centering
+  \caption{Balance Sheet Responses to Fed Funds Shocks -- Top 25\% of Banks by Average Assets, Composite Across Filters}
+  \label{tab:t8_top25_composite}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_top25_composite.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_top25_composite.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+% ==== TOP 10% BY AVERAGE ASSETS: Composite across filters ====
+\subsection{Top 10\% of Banks by Average Assets}
+\begin{table}[htbp]
+  \centering
+  \caption{Balance Sheet Responses to Fed Funds Shocks -- Top 10\% of Banks by Average Assets, Composite Across Filters}
+  \label{tab:t8_top10_composite}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities and Funding}\\[0.25em]
+      \input{tables/t8_A_top10_composite.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_top10_composite.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+\clearpage
+
+\section{Fixed-Effects Robustness}
+\label{sec:fe_robustness}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Balance Sheet Responses to Fed Funds Shocks: Fixed-Effects Specifications}
+  \label{tab:t8_fe_composite}
+  \begin{threeparttable}
+    \begin{minipage}{\textwidth}
+      \centering
+      \textbf{Panel A: Liabilities / Funding}\\[0.25em]
+      \input{tables/t8_A_full_both_FEcomposite.tex}
+
+      \vspace{1.5em}
+
+      \textbf{Panel B: Assets}\\[0.25em]
+      \input{tables/t8_B_full_both_FEcomposite.tex}
+    \end{minipage}
+  \end{threeparttable}
+\end{table}
+
+
+
+\end{document}
