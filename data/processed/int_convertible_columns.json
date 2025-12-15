@@ -1,0 +1,21 @@
+[
+  "rssdid",
+  "cert",
+  "bhcid",
+  "chartertype",
+  "year",
+  "quarter",
+  "assets",
+  "liabilities",
+  "deposits",
+  "intexpdomdep",
+  "savdep",
+  "timedep",
+  "cash",
+  "securities",
+  "loans",
+  "reloans",
+  "ciloans",
+  "fedfundsrepoliab",
+  "timedepge100k"
+]
