@@ -1,0 +1,13 @@
+*.fls
+*.aux
+*.log
+*.fdb_latexmk
+*.txt
+*.gz
+z_*
+*.dta
+*.xlsx
+.DS_Store
+regression_data.csv
+regression_data_small.csv
+callreports_1976_2020_WRDS.csv
