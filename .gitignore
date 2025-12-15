@@ -11,5 +11,6 @@ z_*
 regression_data.csv
 regression_data_small.csv
 callreports_1976_2020_WRDS.csv
+__pycache__/*
 __pycache__/
 *.pyc
