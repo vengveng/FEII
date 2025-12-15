@@ -1,3 +1,15 @@
+"""
+This script is almost entirely AI-generated and performs only table
+post-processing, not any statistical analysis. It reads the LaTeX tables
+exported by the R regressions, cleans their formatting, and then builds 
+composite tables across filters, fixed-effects specifications, and samples.
+All coefficients and standard errors are taken as given from the input .tex
+files; this script never re-estimates any model.
+
+The correctness of the final tables was verified by comparing them to the 
+original regression outputs. 
+"""
+
 from pathlib import Path
 import re
 

@@ -8,25 +8,20 @@ from tqdm import tqdm
 
 def is_integer_convertible(col: pd.Series) -> bool:
     """
-    A column is 'int-convertible' if:
-    - it's numeric (float or int-like), and
-    - all non-NaN entries are whole numbers (end with .0 in float representation).
-    NaNs are allowed.
+    Determine if a pandas Series can be safely converted to an integer type
     """
-
     if is_integer_dtype(col):
         return False
+    
     if not is_numeric_dtype(col):
         return False
-    s = col.dropna()
+    series = col.dropna()
 
-    if s.empty:
+    if series.empty:
         return False
 
-    s = s.astype("float64")
-
-    # Check: value == round(value) for all non-NaN entries
-    return np.all(np.isfinite(s)) and np.all(np.isclose(s, np.round(s), rtol=0))
+    series = series.astype("float64")
+    return np.all(np.isfinite(series)) and np.all(np.isclose(series, np.round(series), rtol=0))
 
 def convert_integer_columns(df: pd.DataFrame) -> pd.DataFrame:
 
@@ -54,6 +49,7 @@ def load_and_prepare_l1(path: Path) -> pd.DataFrame:
 
 
 def get_ff_rate():
+    # Load Fed Funds rate data, process, and save quarterly changes
     path_ff_ = Path("data/raw/DFEDTAR.csv")
     path_ffl = Path("data/raw/DFEDTARL.csv")
     path_ffu = Path("data/raw/DFEDTARU.csv")
@@ -65,6 +61,7 @@ def get_ff_rate():
     total_index = ff_.index.union(ffl.index)
     output = pd.DataFrame(index = total_index)
     output.loc[ff_.index, "FF"] = ff_["DFEDTAR"]
+    # Midpoint
     output.loc[ffu.index, "FF"] = (ffu["DFEDTARU"] + ffl["DFEDTARL"]) / 2
 
     output.index = pd.to_datetime(output.index)

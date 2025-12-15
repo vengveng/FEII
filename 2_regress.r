@@ -1,6 +1,20 @@
-# 2regress.R
-
 library(fixest)
+
+# This script runs all Table 8 regressions and exports the LaTeX tables.
+# The helper functions are defined so that:
+#   * build_sample_df() applies the sample restrictions and filters
+#     (full / pre2008 / top25 / top10, and none / growth / winsor / both)
+#     in one place and returns a cleaned regression dataset.
+#   * run_main_regression() takes a given dataset and fixed-effect specification,
+#     runs the same regression for all dependent variables, and writes the
+#     Panel A / Panel B LaTeX tables with consistent formatting.
+#
+# The loops at the end automate all combinations:
+#   * The first set of loops runs Table 8 for every (sample, filter) pair and
+#     stores the models in all_results, while writing t8_A_*.tex and t8_B_*.tex.
+#   * The final loop reuses the same code but varies only the fixed-effect
+#     specification on the full-sample, "both"-filter data to generate the
+#     FE-robustness tables.
 
 # ----------------------------------------------------
 # 0. Paths, helpers, and data loading
@@ -76,6 +90,7 @@ build_sample_df <- function(cr, sample_tag, filter_tag) {
   df <- cr
 
   # ----- sample restriction -----
+  # year, top25_assets, top10_assets were generated in python
   if (sample_tag == "pre2008") {
     df <- subset(df, year <= 2007)
   } else if (sample_tag == "top25") {
@@ -115,77 +130,12 @@ build_sample_df <- function(cr, sample_tag, filter_tag) {
   return(df)
 }
 
-# run_table8_block <- function(df,
-#                              sample_tag,
-#                              filter_tag,
-#                              log_tag = NULL) {
-#   # ensure dFF alias exists for the interaction term
-#   if (!("dFF" %in% names(df)) && ("d_FF" %in% names(df))) {
-#     df$dFF <- df[["d_FF"]]
-#   }
-
-#   if (is.null(log_tag)) {
-#     log_tag <- paste0(sample_tag, " / ", filter_tag)
-#   }
-
-#   res <- list()
-
-#   for (y in dependent_variables) {
-#     fml <- as.formula(
-#       paste0(
-#         y,
-#         " ~ l1_herfdepcty + dFF:l1_herfdepcty | rssdid + rssdid^post2008 + dateq"
-#       )
-#     )
-
-#     m <- feols(
-#       fml,
-#       data    = df,
-#       cluster = ~ rssdid
-#     )
-
-#     cat("\n[", log_tag, "] Dependent variable:", y, "\n")
-#     print(summary(m))
-
-#     res[[y]] <- m
-#   }
-
-#   panelA_models <- res[panelA_vars]
-#   panelB_models <- res[panelB_vars]
-
-#   # File names: t8_A_<sample>_<filter>.tex, t8_B_<sample>_<filter>.tex
-#   file_A <- sprintf("tables/t8_A_%s_%s.tex", sample_tag, filter_tag)
-#   file_B <- sprintf("tables/t8_B_%s_%s.tex", sample_tag, filter_tag)
-
-#   etable(
-#     panelA_models,
-#     style.tex    = st_aer,
-#     digits       = 4,
-#     digits.stats = 3,
-#     se.below     = TRUE,
-#     fitstat      = ~ n + r2 + war2,
-#     file         = file_A
-#   )
-
-#   etable(
-#     panelB_models,
-#     style.tex    = st_aer,
-#     digits       = 4,
-#     digits.stats = 3,
-#     se.below     = TRUE,
-#     fitstat      = ~ n + r2 + war2,
-#     file         = file_B
-#   )
-
-#   invisible(res)
-# }
-
-run_table8_block <- function(df,
-                             sample_tag,
-                             filter_tag,
-                             log_tag = NULL,
-                             fe_spec = "rssdid + rssdid^post2008 + dateq",
-                             fe_tag = NULL) {
+run_main_regression <- function(df,
+                                sample_tag,
+                                filter_tag,
+                                log_tag = NULL,
+                                fe_spec = "rssdid + rssdid^post2008 + dateq",
+                                fe_tag = NULL) {
   # ensure dFF alias exists for the interaction term
   if (!("dFF" %in% names(df)) && ("d_FF" %in% names(df))) {
     df$dFF <- df[["d_FF"]]
@@ -222,7 +172,7 @@ run_table8_block <- function(df,
 
   # ---------- file naming logic ----------
   # if fe_tag is NULL -> old names: t8_A_<sample>_<filter>.tex
-  # if fe_tag is not NULL -> t8_A_<sample>_<fe_tag>_<filter>.tex
+  # if fe_tag is not NULL -> t8_A_<sample>_<filter>_<fe_tag>.tex
   if (is.null(fe_tag)) {
     file_A <- sprintf("tables/t8_A_%s_%s.tex", sample_tag, filter_tag)
     file_B <- sprintf("tables/t8_B_%s_%s.tex", sample_tag, filter_tag)
@@ -271,8 +221,8 @@ for (s in sample_tags) {
   for (f in filter_tags) {
     df_sf <- build_sample_df(cr, sample_tag = s, filter_tag = f)
 
-    res_sf <- run_table8_block(
-      df        = df_sf,
+    res_sf <- run_main_regression(
+      df         = df_sf,
       sample_tag = s,
       filter_tag = f,
       log_tag    = paste0("Sample=", s, ", Filter=", f)
@@ -284,8 +234,6 @@ for (s in sample_tags) {
 
 
 ### Fixed effect variations
-# "almost cartesian" FE variants
-
 fe_variants <- c(
   mainFE        = "rssdid + rssdid^post2008 + dateq",  # baseline
   noBankFE      = "rssdid^post2008 + dateq",
@@ -305,7 +253,7 @@ for (nm in names(fe_variants)) {
   cat("FE variant (full sample):", nm, " -> ", fe_term, "\n")
   cat("======================================\n")
 
-  results_full_FE[[nm]] <- run_table8_block(
+  results_full_FE[[nm]] <- run_main_regression(
     df          = df_sf,
     sample_tag  = "full",
     filter_tag  = "both",
