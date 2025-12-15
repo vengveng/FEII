@@ -2,30 +2,6 @@
 
 This repository contains the code used to process bank Call Reports data, run the regression specifications in **R**, and generate publication-ready **LaTeX** tables used in `report.tex` / `report.pdf`.
 
-## Repository structure
-
-.
-├── 1_process_data.py
-├── 2_regressALL.r
-├── 3_make_latex.py
-├── helper_functions.py
-├── data
-│   ├── processed
-│   │   ├── fed_funds_rate_quarterly.csv
-│   │   ├── int_convertible_columns.json
-│   │   └── l1_herfdepcty.csv
-│   └── raw
-│       ├── DFEDTAR.csv
-│       ├── DFEDTARL.csv
-│       ├── DFEDTARU.csv
-│       └── l1_herfdepcty.csv
-├── tables
-│   ├── t8_A_full_both_FEcomposite.tex
-│   ├── t8_A_full_both_mainFE.tex
-│   └── t8_A_full_both_noBankFE.tex
-├── report.tex
-└── report.pdf
-
 ## Data requirements
 
 To run the pipeline end-to-end, you must provide the WRDS Call Reports Stata file:
